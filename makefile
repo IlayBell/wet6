@@ -2,7 +2,7 @@ CXX=g++
 CXXFLAGS=-g -Wall -std=c++11
 CLINK=$(CXX)
 OBJS=main.o NIC_sim.o L2.o L3.o L4.o 
-EXEC="prog.exe"
+EXEC="nic_sim.exe"
 RM=rm -rf
 
 prog.exe: $(OBJS)
