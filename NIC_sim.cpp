@@ -114,7 +114,7 @@ void nic_sim::nic_flow(std::string packet_file) {
 }
 
 void nic_sim::nic_print_results() {
-	std::cout << "LOCAL_DRAM:" << std::endl;
+	std::cout << "LOCAL DRAM:" << std::endl;
 
 	for (const open_port& prt: this->open_ports) {
 		std::cout << prt.src_prt << " ";
