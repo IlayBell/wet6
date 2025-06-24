@@ -75,11 +75,8 @@ bool L2::as_string(std::string &packet) {
 		return false;
 	}
 
-	packet = mac_to_str(this->src_mac) + "|" +
-			 mac_to_str(this->dst_mac) + "|" +
-			 L3_str + "|" +
-			 std::to_string(cs); 
-
+	packet = L3_str;
+	
 	return true;
 }
 
