@@ -114,7 +114,7 @@ void nic_sim::nic_flow(std::string packet_file) {
 }
 
 void nic_sim::nic_print_results() {
-	std::cout << "LOCAL_DRAM" << std::endl;
+	std::cout << "LOCAL_DRAM:" << std::endl;
 
 	for (const open_port& prt: this->open_ports) {
 		std::cout << prt.src_prt << " ";
@@ -123,7 +123,7 @@ void nic_sim::nic_print_results() {
 		const unsigned char* data_arr = prt.data;
 		
 		std::string data_str = L4::arr_dec_to_hex(data_arr, DATA_ARR_SIZE);
-		std::cout << data_str << std::endl;
+		std::cout << data_str <<  std::endl;
 	}
 
 	std::cout << "\nRQ:" << std::endl;
