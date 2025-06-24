@@ -197,6 +197,8 @@ L3* nic_sim::create_L3(std::string &packet) {
 	L4* L4_packet = this->create_L4(L4_str);
 	L3* L3_packet = new L3(*L4_packet, L3_str);
 
+	delete L4_packet;
+
 	return L3_packet;
 }
 
@@ -216,6 +218,8 @@ L2* nic_sim::create_L2(std::string &packet) {
 
 	L3* L3_packet = this->create_L3(L3_str);
 	L2* L2_packet = new L2(*L3_packet, packet);
+
+	delete L3_packet;
 
 	return L2_packet;
 }
