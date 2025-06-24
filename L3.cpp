@@ -118,7 +118,8 @@ bool L3::proccess_packet(open_port_vec &open_ports,
 		for (int i = 0; i < IP_V4_SIZE; i++) {
 			this->src_ip[i] = ip[i];
 		}
-
+		
+		this->cs = calc_sum();
 		dst = TQ;
 		return true;
 	}
