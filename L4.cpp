@@ -62,7 +62,7 @@ bool L4::validate_packet(open_port_vec open_ports,
 							});
 
 	return (port_iter != open_ports.end() &&
-			this->addr < DATA_ARR_SIZE - DATA_L5_SIZE);
+			this->addr <= DATA_ARR_SIZE - DATA_L5_SIZE);
 }
 
 bool L4::proccess_packet(open_port_vec &open_ports,
