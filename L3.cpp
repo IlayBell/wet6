@@ -71,13 +71,6 @@ bool L3::proccess_packet(open_port_vec &open_ports,
                      uint8_t ip[IP_V4_SIZE],
                      uint8_t mask,
                      memory_dest &dst) {
-	this->ttl--;
-	this->cs = calc_sum();
-
-	// Packet invalid
-	if (ttl == 0) {
-		return false;
-	}
 
 	/* dst ip same as NIC's => L4 (2.4) */
 	if (comp_arr(ip, this->dst_ip, IP_V4_SIZE)) {
@@ -98,6 +91,14 @@ bool L3::proccess_packet(open_port_vec &open_ports,
 		
 
 		return this->ttl > 0 && L4_flag;
+	}
+
+	this->ttl--;
+	this->cs = calc_sum();
+
+	// Packet invalid
+	if (ttl == 0) {
+		return false;
 	}
 
 	/* both belongs to local net => ignore (2.5) */
