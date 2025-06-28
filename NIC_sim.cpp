@@ -6,7 +6,14 @@
 
 using namespace common;
 
-
+/**
+* @fn nic_sim
+* @brief Constructor of the class.
+* 
+* @param param_file - File name containing the NIC's parameters.
+*
+* @return New simulation object.
+*/
 nic_sim::nic_sim(std::string param_file) {
 	std::ifstream file(param_file);
 
@@ -69,6 +76,14 @@ nic_sim::nic_sim(std::string param_file) {
 	}
 }
 
+/**
+* @fn nic_flow
+* @brief Process and store to relevant location all packets in packet_file.
+*
+* @param packet_file - Name of file containing packets as strings.
+*
+* @return None.
+*/
 void nic_sim::nic_flow(std::string packet_file) {
 	std::ifstream file(packet_file);
 
@@ -113,6 +128,23 @@ void nic_sim::nic_flow(std::string packet_file) {
 	}
 }
 
+/**
+* @fn nic_print_results
+* @brief Prints all data stored in memory to stdout in the following format:
+*
+*        LOCAL DRAM:
+*        [src] [dst]: [data - DATA_ARR_SIZE bytes]
+*        [src] [dst]: [data - DATA_ARR_SIZE bytes]
+*        ...
+*
+*        RQ:
+*        [each packet in separate line]
+*
+*        TQ:
+*        [each packet in separate line]
+*
+* @return None.
+*/
 void nic_sim::nic_print_results() {
 	std::cout << "LOCAL DRAM:" << std::endl;
 
@@ -138,11 +170,26 @@ void nic_sim::nic_print_results() {
 	}
 }
 
+/**
+* @fn ~nic_sim
+* @brief Destructor of the class.
+*
+* @return None.
+*/
 nic_sim::~nic_sim() {
 	delete[] this->nic_mac;
 	delete[] this->nic_ip;
 }
 
+/**
+* @fn packet_factory
+* @brief Gets a string representing a packet, creates the corresponding
+*        packet type, and returns a pointer to a generic_packet.
+*
+* @param packet - String representation of a packet.
+*
+* @return Pointer to a generic_packet object.
+*/
 generic_packet* nic_sim::packet_factory(std::string &packet) {
 	/* L2 is distinct because of MAC address at first, 
 	   which each entry has fixed size */
@@ -166,6 +213,14 @@ generic_packet* nic_sim::packet_factory(std::string &packet) {
 	return this->create_L4(packet);
 }
 
+/**
+* @fn seperate_ip_mask
+* @brief takes the string "ip/mask" and seperates them.
+* @param ip_mask - the string of ip and mask. format:
+                  "ip/mask".
+* @param ip_arr = the array to write the ip into.
+* @return the mask as an int.
+*/
 uint8_t nic_sim::seperate_ip_mask(std::string ip_mask, uint8_t* ip_arr) {
 	int idx_sep = 0;
 	while(ip_mask[idx_sep++] != '/');
@@ -179,11 +234,25 @@ uint8_t nic_sim::seperate_ip_mask(std::string ip_mask, uint8_t* ip_arr) {
 	return std::stoi(mask);
 }
 
+/**
+* @fn create_L4
+* @brief creates an object L4 from string.
+* @param packet - string representing the packet. format:
+                  "src_port|dst_port|addrs|L5_data".
+* @return pointer to L4 packet.
+*/
 L4* nic_sim::create_L4(std::string &packet) {
 	L4* L4_packet = new L4(packet);
 	return L4_packet;
 }
 
+/**
+* @fn create_L3
+* @brief creates an object L3 from string.
+* @param packet - string representing the packet. format:
+                  "src_ip|dst_ip|ttl|cs|L4_packet".
+* @return pointer to L3 packet.
+*/
 L3* nic_sim::create_L3(std::string &packet) {
 
 	int idx_sep = 0;
@@ -202,6 +271,13 @@ L3* nic_sim::create_L3(std::string &packet) {
 	return L3_packet;
 }
 
+/**
+* @fn create_L2
+* @brief creates an object L2 from string.
+* @param packet - string representing the packet. format:
+                  "src_mac|dst_mac|L3_packet|cs".
+* @return pointer to L2 packet.
+*/
 L2* nic_sim::create_L2(std::string &packet) {
 	int idx_sep = 0;
 	int bar_cnt = 0;

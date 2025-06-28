@@ -98,10 +98,41 @@ class nic_sim {
     uint8_t* nic_ip;
     uint8_t nic_mask;
 
-    static uint8_t seperate_ip_mask(std::string ip, uint8_t* ip_arr);
+    /**
+    * @fn seperate_ip_mask
+    * @brief takes the string "ip/mask" and seperates them.
+    * @param ip_mask - the string of ip and mask. format:
+                      "ip/mask".
+    * @param ip_arr = the array to write the ip into.
+    * @return the mask as an int.
+    */
+    static uint8_t seperate_ip_mask(std::string ip_mask, uint8_t* ip_arr);
 
+    /**
+    * @fn create_L4
+    * @brief creates an object L4 from string.
+    * @param packet - string representing the packet. format:
+                      "src_port|dst_port|addrs|L5_data".
+    * @return pointer to L4 packet.
+    */
     L4* create_L4(std::string &packet);
+
+    /**
+    * @fn create_L3
+    * @brief creates an object L3 from string.
+    * @param packet - string representing the packet. format:
+                      "src_ip|dst_ip|ttl|cs|L4_packet".
+    * @return pointer to L3 packet.
+    */
     L3* create_L3(std::string &packet);
+
+    /**
+    * @fn create_L2
+    * @brief creates an object L2 from string.
+    * @param packet - string representing the packet. format:
+                      "src_mac|dst_mac|L3_packet|cs".
+    * @return pointer to L2 packet.
+    */
     L2* create_L2(std::string &packet);
 
 
